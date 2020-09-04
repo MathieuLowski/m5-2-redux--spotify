@@ -3,6 +3,8 @@
 ---
 
 - Redux is a global store for your state
+  It is one place where all my state will be.
+
 - Even very large apps -> one big global-state object
 
 ---
@@ -12,6 +14,7 @@ When Redux was released, people were skeptical about this.
 ---
 
 Redux makes this practical by letting you "combine reducers".
+You can have different reducers
 
 ---
 
@@ -49,7 +52,7 @@ function userReducer(state, action) {
     }
 
     default:
-      return state;
+      return state; ///super important line
   }
 }
 
@@ -73,7 +76,7 @@ function orderReducer(state, action) {
 Redux encourages this workflow by letting you **combine reducers**:
 
 ```js
-import { combineReducers } from "redux";
+import { combineReducers } from "redux"; //it takes both of reduces that I created and combine them together.
 
 import userReducer from "./user-reducer";
 import orderReducer from "./order-reducer";
@@ -113,7 +116,7 @@ export default combineReducers({
 // What is the initial state?
 ```
 
----
+## {color:"red" number: 4}
 
 ```js
 function itemReducer(state) {
@@ -132,7 +135,7 @@ export default combineReducers({
 // What is the initial state?
 ```
 
----
+## {item: {hi:5} location: "montreal"}
 
 ```js
 function petReducer(state) {
@@ -180,6 +183,14 @@ export default combineReducers({
 
 // What is the initial state?
 ```
+
+{
+data : {rentires: [] },
+ui:{
+modal:null,
+tooltip: null
+}
+}
 
 ---
 

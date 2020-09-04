@@ -85,13 +85,13 @@ const App = () => {
     fetch("/hockey")
       .then((res) => res.json())
       .then((scores) => {
-        // TODO
+        dispatch(receiveHockeyScores(scores));
       });
 
     fetch("/baseball")
       .then((res) => res.json())
       .then((scores) => {
-        // TODO
+        dispatch(receiveBaseballScores(scores)); // TODO
       });
   }, []);
 
@@ -109,7 +109,8 @@ Update this example so that it dispatches an action when _both_ of the endpoints
 
 <Timer />
 
-```js
+```js ////// USE PROMISE ALL //////////
+
 const receiveAllScores = () => ({
   type: "RECEIVE_ALL_SCORES",
 });
@@ -120,13 +121,20 @@ const App = () => {
   React.useEffect(() => {
     // Dispatch `receiveAllScores` after BOTH fetches have completed
 
-    fetch("/hockey").then((scores) => {
-      dispatch(receiveHockeyScores(scores));
+    const hockeyPromise = fetch("/hockey")
+    .then(res => res.json())
+    .then((scores) => {
+     .then (scores => { dispatch(receiveHockeyScores(scores))});
     });
 
-    fetch("/baseball").then((scores) => {
-      dispatch(receiveBaseballScores(scores));
+    const baseBallPromise = fetch("/baseball")
+    .then(res => res.json())
+    .then((scores) => {
+      .then (scores=> {dispatch(receiveBaseballScores(scores))});
     });
+
+    Promise.all([hocketPromise, baseballPromise])
+    .then(()=> dispatch(receiveAllScores()));
   }, []);
 
   return <Scores />;
